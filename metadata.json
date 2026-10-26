@@ -1,0 +1,6 @@
+{
+  "name": "The Grand Formula of Brain Happiness",
+  "description": "An interactive mathematical, neurological, and illogical simulator calculating human brain happiness across 36+ rational, faulty, and absurd variables.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

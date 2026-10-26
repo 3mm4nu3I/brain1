@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with authentication and metadata",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "displayName": { "type": "string", "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 256 },
+        "photoURL": { "type": "string", "maxLength": 512 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastLoginAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "SavedFormula": {
+      "title": "SavedFormula",
+      "description": "Saved brain formula state, custom variables, and allostatic calculation snapshot",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 140 },
+        "normalizedHappiness": { "type": "number" },
+        "allostaticLoad": { "type": "number" },
+        "archetypeTitle": { "type": "string", "maxLength": 100 },
+        "variablesSnapshot": { "type": "string", "maxLength": 30000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "title", "normalizedHappiness", "allostaticLoad"]
+    },
+    "CranialJournalNote": {
+      "title": "CranialJournalNote",
+      "description": "User reflection or neurological journal entry linked to cranial state",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "noteText": { "type": "string", "maxLength": 4000 },
+        "happinessScore": { "type": "number" },
+        "archetype": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "noteText"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Public user profile document identified by user UID"
+    },
+    "/savedFormulas/{formulaId}": {
+      "schema": { "$ref": "#/entities/SavedFormula" },
+      "description": "Saved customized happiness formulas and parameter snapshots owned by a user"
+    },
+    "/journalNotes/{noteId}": {
+      "schema": { "$ref": "#/entities/CranialJournalNote" },
+      "description": "Personal neuro-journal reflections linked to the user's emotional state"
+    }
+  }
+}
