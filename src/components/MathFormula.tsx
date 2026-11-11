@@ -100,7 +100,7 @@ export const MathFormula: React.FC<MathFormulaProps> = ({
       </div>
 
       {/* Interactive Term Inspector */}
-      <div className="pt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+      <div className="pt-3 flex flex-wrap items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-2 text-slate-400">
           <Eye className="w-3.5 h-3.5 text-slate-500" />
           <span>Interactive Term Probing:</span>
@@ -109,28 +109,26 @@ export const MathFormula: React.FC<MathFormulaProps> = ({
               {selectedVar.symbol} = {selectedVar.name} ({selectedVar.value} {selectedVar.unit})
             </span>
           ) : (
-            <span className="text-slate-500 italic">Select any slider below or click a key factor</span>
+            <span className="text-slate-500 italic">Select any slider or jump to the verified proof breakdown</span>
           )}
         </div>
 
-        {/* Quick legend */}
-        <div className="flex items-center gap-3 text-slate-400 text-xs font-mono">
-          <span className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block" />
-            <span>Wetware</span>
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full bg-violet-400 inline-block" />
-            <span>Illogical Surge</span>
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full bg-rose-400 inline-block" />
-            <span>Firmware Bug</span>
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full bg-amber-400 inline-block" />
-            <span>Whimsy</span>
-          </span>
+        {/* Links to Citations and Proofs */}
+        <div className="flex items-center gap-2">
+          <a
+            href="#equation-proofs"
+            className="px-3 py-1 rounded-lg bg-emerald-950/60 border border-emerald-600/50 text-emerald-300 hover:text-white hover:bg-emerald-900/80 transition-colors flex items-center gap-1.5 font-medium text-[11px]"
+          >
+            <span>Audit Proofs & DOI Citations</span>
+            <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-emerald-900/60">v4.2.1</span>
+          </a>
+
+          <a
+            href="#brainchat"
+            className="px-3 py-1 rounded-lg bg-cyan-950/60 border border-cyan-600/50 text-cyan-300 hover:text-white hover:bg-cyan-900/80 transition-colors flex items-center gap-1.5 font-medium text-[11px]"
+          >
+            <span>Consult BrainChat</span>
+          </a>
         </div>
       </div>
     </div>

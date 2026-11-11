@@ -23,6 +23,8 @@ import {
   Mountain,
   HeartPulse,
   Cloud,
+  FileCheck2,
+  MessageSquare,
 } from 'lucide-react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { auth, testConnection } from './lib/firebase';
@@ -45,7 +47,8 @@ import { AddictionWithdrawalLab } from './components/AddictionWithdrawalLab';
 import { CustomVariableModal } from './components/CustomVariableModal';
 import { ExportCertificateModal } from './components/ExportCertificateModal';
 import { FirebaseSyncModal } from './components/FirebaseSyncModal';
-import { GeminiNeuroChatbot } from './components/GeminiNeuroChatbot';
+import { BrainChat } from './components/BrainChat';
+import { EquationProofChangelogViewer } from './components/EquationProofChangelogViewer';
 import { TEN_BRAIN_SECTIONS } from './data/brainSections';
 
 export default function App() {
@@ -65,6 +68,7 @@ export default function App() {
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [isFirebaseModalOpen, setIsFirebaseModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isFloatingChatOpen, setIsFloatingChatOpen] = useState(false);
 
   // Initialize Firebase connection test & auth listener on mount
   React.useEffect(() => {
@@ -215,8 +219,8 @@ export default function App() {
             The Grand Formula
           </a>
 
-          {/* Zone 2: 4-6 nav links */}
-          <nav className="hidden md:flex items-center gap-3.5 text-xs font-medium text-slate-400">
+          {/* Zone 2: nav links */}
+          <nav className="hidden md:flex items-center gap-3 text-xs font-medium text-slate-400">
             <a href="#brain-map" className="hover:text-slate-200 transition-colors flex items-center gap-1 text-cyan-400 font-semibold">
               <Mountain className="w-3.5 h-3.5" />
               <span>Mountain Brain</span>
@@ -237,21 +241,31 @@ export default function App() {
               <Coffee className="w-3.5 h-3.5 text-amber-400" />
               <span>Withdrawal & Coffee</span>
             </a>
-            <a href="#osint" className="hover:text-slate-200 transition-colors flex items-center gap-1">
-              <Globe className="w-3.5 h-3.5" />
-              <span>OSINT</span>
-            </a>
-            <a href="#shocks" className="hover:text-slate-200 transition-colors flex items-center gap-1 text-rose-300">
-              <Flame className="w-3.5 h-3.5 text-rose-400" />
-              <span>Shocks</span>
-            </a>
             <a href="#formula" className="hover:text-slate-200 transition-colors">
               Formula
+            </a>
+            <a href="#equation-proofs" className="hover:text-slate-200 transition-colors flex items-center gap-1 text-emerald-300">
+              <FileCheck2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Proofs & Citations</span>
+            </a>
+            <a href="#brainchat" className="hover:text-slate-200 transition-colors flex items-center gap-1 text-cyan-300 font-semibold relative">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+              <span>BrainChat</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping absolute -top-0.5 -right-2" />
             </a>
           </nav>
 
           {/* Zone 3: 1-2 primary actions */}
           <div className="flex items-center gap-2 sm:gap-3">
+            <a
+              href="#brainchat"
+              className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+              title="Open BrainChat Neural Oracle"
+            >
+              <Brain className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="hidden sm:inline">BrainChat</span>
+            </a>
+
             <button
               onClick={() => setIsFirebaseModalOpen(true)}
               className={`p-2 sm:px-3 rounded-lg border text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
@@ -555,7 +569,7 @@ export default function App() {
           />
         </section>
 
-        {/* SECTION 5: THE FORMULA RENDERER */}
+        {/* SECTION: THE FORMULA RENDERER */}
         <section id="formula">
           <MathFormula
             variables={variables}
@@ -564,7 +578,25 @@ export default function App() {
           />
         </section>
 
-        {/* SECTION 6: PARADOX LABORATORY */}
+        {/* SECTION: EQUATION PROOFS, PEER-REVIEWED CITATIONS & CHANGELOG */}
+        <section id="equation-proofs">
+          <EquationProofChangelogViewer
+            breakdown={breakdown}
+            variables={variables}
+            onSelectVariable={setSelectedVarId}
+          />
+        </section>
+
+        {/* SECTION: BRAINCHAT AI NEURAL ORACLE STUDIO */}
+        <section id="brainchat">
+          <BrainChat
+            breakdown={breakdown}
+            variables={variables}
+            isFloating={false}
+          />
+        </section>
+
+        {/* SECTION: PARADOX LABORATORY */}
         <section id="paradoxes">
           <ParadoxLaboratory
             variables={variables}
@@ -729,8 +761,14 @@ export default function App() {
         onLoadSavedFormula={handleLoadSavedFormula}
       />
 
-      {/* GEMINI NEURO CHATBOT (GROUNDED IN SEARCH & MAPS) */}
-      <GeminiNeuroChatbot breakdown={breakdown} />
+      {/* FLOATING BRAINCHAT AI ORACLE */}
+      <BrainChat
+        breakdown={breakdown}
+        variables={variables}
+        isFloating={true}
+        isOpenFloating={isFloatingChatOpen}
+        onToggleFloating={() => setIsFloatingChatOpen((prev) => !prev)}
+      />
     </div>
   );
 }
